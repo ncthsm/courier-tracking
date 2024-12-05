@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+
+  postgis:
+    image: postgis/postgis
+    environment:
+      POSTGRES_DB: courier-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+
+  app:
+    build: .
+    container_name: courier-tracking
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgis
+    networks:
+      - courier-network
+
+networks:
+  courier-network:
+    driver: bridge
+
+volumes:
+  postgis_data:

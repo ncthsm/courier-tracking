@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/courier-db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+tracking:
+  entrance-radius-meters: 100
+  reentryThresholdMinutes: 1
+  distanceCalculationType: # HAVERSINE or EUCLIDEAN
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+    use-root-path: true
+    disable-swagger-default-url: true
+  show-actuator: false
+  packages-to-scan: com.migros.couriertracking.controller
+  paths-to-match: /api/v1/**
+
