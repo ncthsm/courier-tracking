@@ -1,7 +1,6 @@
 package com.migros.couriertracking.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.migros.couriertracking.entity.Store;
 import com.migros.couriertracking.model.request.CreateStoreRequest;
 import com.migros.couriertracking.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class StoreDataLoader {
             ObjectMapper mapper = new ObjectMapper();
             InputStream inputStream = new ClassPathResource("static/stores.json").getInputStream();
             List<Map<String, Object>> stores = mapper.readValue(inputStream, new TypeReference<>() {});
-            stores.forEach(store->saveStore(store));
+            stores.forEach(this::saveStore);
         };
     }
 

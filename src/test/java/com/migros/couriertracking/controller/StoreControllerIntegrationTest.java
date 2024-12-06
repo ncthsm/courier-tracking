@@ -80,7 +80,7 @@ public class StoreControllerIntegrationTest extends BaseIntegrationTest {
     void shouldValidateLatitudeBounds() throws Exception {
         CreateStoreRequest invalidRequest = new CreateStoreRequest();
         invalidRequest.setName("Invalid Store");
-        invalidRequest.setLatitude(91.0); // Geçersiz enlem değeri
+        invalidRequest.setLatitude(91.0);
         invalidRequest.setLongitude(28.9784);
 
         mockMvc.perform(post("/api/v1/store")
@@ -106,7 +106,6 @@ public class StoreControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void shouldDeleteStore() throws Exception {
-        // Önce bir mağaza oluştur
         CreateStoreRequest createRequest = new CreateStoreRequest();
         createRequest.setName("Store To Delete");
         createRequest.setLatitude(41.0082);
@@ -122,12 +121,10 @@ public class StoreControllerIntegrationTest extends BaseIntegrationTest {
 
         Long storeId = objectMapper.readTree(createResponse).get("id").asLong();
 
-        // Mağazayı sil
         mockMvc.perform(delete("/api/v1/store/{storeId}", storeId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        // Silinen mağazayı getirmeye çalış, 404 almalıyız
         mockMvc.perform(get("/api/v1/store/{storeId}", storeId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
