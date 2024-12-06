@@ -3,18 +3,16 @@
 This application tracks couriers and their visits to stores, calculating total travel distances and monitoring store entries.
 
 ## Table of Contents
-1. [Overview](#overview)
-2. [Design Patterns Used](#design-patterns-used)
+1. [Design Patterns Used](#design-patterns-used)
    - [Observer Pattern](#1-observer-pattern)
    - [Strategy Pattern](#2-strategy-pattern)
    - [Factory Pattern](#3-factory-pattern)
-3. [Technologies Used](#technologies-used)
-4. [Running the Application](#running-the-application)
+2. [Technologies Used](#technologies-used)
+3. [Running the Application](#running-the-application)
    - [Using Docker Compose](#using-docker-compose)
-5. [API Documentation](#api-documentation)
+4. [API Documentation](#api-documentation)
    - [API Endpoints](#api-endpoints)
    - [Example Requests with cURL](#example-requests-with-curl)
-6. [Testing](#testing)
 
 ## Design Patterns Used
 
@@ -45,7 +43,7 @@ This application tracks couriers and their visits to stores, calculating total t
 
 1. Clone the repository and navigate into the project directory:
    ```bash
-   git clone https://github.com/yourusername/courier-tracking.git
+   git clone https://github.com/ncthsm/courier-tracking.git
    cd courier-tracking
    ```
 
