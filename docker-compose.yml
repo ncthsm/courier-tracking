@@ -29,5 +29,8 @@ services:
       db:
         condition: service_healthy
 
+networks:
+  courier-network:
+    driver: bridge
 volumes:
   postgres_data:

@@ -77,7 +77,7 @@ public class LocationTrackingServiceImpl implements LocationTrackingService {
 
         CourierLocation location = new CourierLocation();
         location.setCourier(courier);
-        location.setLocation(GeometryUtil.createPoint(request.getLng(), request.getLat()));
+        location.setLocation(GeometryUtil.createPoint(request.getLat(), request.getLng()));
         location.setTimeStamp(request.getTime());
         return location;
     }
