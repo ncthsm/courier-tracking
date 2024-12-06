@@ -25,20 +25,20 @@ public class StoreController {
     }
 
     @DeleteMapping("/{storeId}")
-    public ResponseEntity<Void> deleteStore(@PathVariable Long storeId) {
+    public ResponseEntity<Void> deleteStore(@PathVariable("storeId") Long storeId) {
         storeService.deleteStore(storeId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/{storeId}")
-    public ResponseEntity<StoreDto> getStore(@PathVariable Long storeId) {
+    public ResponseEntity<StoreDto> getStore(@PathVariable("storeId") Long storeId) {
         return ResponseEntity.status(HttpStatus.OK).body(storeService.getStore(storeId));
     }
 
     @GetMapping
     public ResponseEntity<Page<StoreDto>> getAllStores(
             @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return ResponseEntity.ok(storeService.getAllStores(PageRequest.of(page, pageSize)));
+        return ResponseEntity.status(HttpStatus.OK).body(storeService.getAllStores(PageRequest.of(page, pageSize)));
     }
 
 }

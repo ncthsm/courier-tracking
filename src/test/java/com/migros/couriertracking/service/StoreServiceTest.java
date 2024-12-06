@@ -11,8 +11,11 @@ import com.migros.couriertracking.service.impl.StoreServiceImpl;
 import com.migros.couriertracking.util.GeometryUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.locationtech.jts.geom.Point;
 import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,20 +29,21 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class StoreServiceTest {
 
     @Mock
     private StoreRepository storeRepository;
     @Mock
     private StoreMapper storeMapper;
-    @Mock
+    @Spy
     private CourierTrackingConfig config;
 
     private StoreService storeService;
 
     @BeforeEach
     void setUp() {
-        when(config.getEntranceRadiusMeters()).thenReturn(100.0);
+        config.setEntranceRadiusMeters(100.0);
         storeService = new StoreServiceImpl(storeRepository, storeMapper, config);
     }
 
@@ -107,7 +111,6 @@ class StoreServiceTest {
 
         when(storeRepository.findStoresWithinRadius(any(Point.class), eq(100.0)))
             .thenReturn(List.of(store));
-        when(storeMapper.to(any(Store.class))).thenReturn(storeDto);
 
         List<Store> result = storeService.findStoresNearLocation(searchLocation);
 

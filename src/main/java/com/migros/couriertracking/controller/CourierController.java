@@ -26,8 +26,7 @@ public class CourierController {
 
     @PostMapping
     public ResponseEntity<CourierDto> createCourier(@Valid @RequestBody CreateCourierRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(courierService.createCourier(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(courierService.createCourier(request));
     }
 
     @DeleteMapping("/{courierId}")
@@ -38,31 +37,31 @@ public class CourierController {
 
     @GetMapping("/{courierId}")
     public ResponseEntity<CourierDto> getCourier(@PathVariable("courierId") Long courierId) {
-        return ResponseEntity.ok(courierService.getCourier(courierId));
+        return ResponseEntity.status(HttpStatus.OK).body(courierService.getCourier(courierId));
     }
 
     @GetMapping
     public ResponseEntity<Page<CourierDto>> getAllCouriers(
             @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return ResponseEntity.ok(courierService.getAllCouriers(PageRequest.of(page, pageSize)));
+        return ResponseEntity.status(HttpStatus.OK).body(courierService.getAllCouriers(PageRequest.of(page, pageSize)));
     }
 
     @PutMapping("/{courierId}")
     public ResponseEntity<CourierDto> updateCourierName(
             @PathVariable("courierId") Long courierId,
             @Valid @RequestBody CreateCourierRequest request) {
-        return ResponseEntity.ok(courierService.updateCourierName(courierId, request.getName()));
+        return ResponseEntity.status(HttpStatus.OK).body(courierService.updateCourierName(courierId, request.getName()));
     }
 
     @GetMapping("/identity/{identityNumber}")
     public ResponseEntity<CourierDto> getCourierByIdentityNumber(@PathVariable("identityNumber") String identityNumber) {
-        return ResponseEntity.ok(courierService.getCourierByIdentityNumber(identityNumber));
+        return ResponseEntity.status(HttpStatus.OK).body(courierService.getCourierByIdentityNumber(identityNumber));
     }
 
     @GetMapping("/{courierId}/total-distance")
     public ResponseEntity<CourierDistanceResponse> getTotalDistance(@PathVariable("courierId") Long courierId) {
         Double totalDistance = courierService.getTotalTravelDistance(courierId);
-        return ResponseEntity.ok(new CourierDistanceResponse(courierId, totalDistance));
+        return ResponseEntity.status(HttpStatus.OK).body(new CourierDistanceResponse(courierId, totalDistance));
     }
 
 

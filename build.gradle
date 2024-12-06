@@ -44,10 +44,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
 
-	testImplementation 'org.testcontainers:postgis'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 compileJava {
