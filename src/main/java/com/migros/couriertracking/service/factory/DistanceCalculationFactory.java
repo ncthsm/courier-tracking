@@ -6,6 +6,7 @@ import com.migros.couriertracking.service.strategy.DistanceCalculationStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -20,10 +21,13 @@ public class DistanceCalculationFactory {
 
     private final Map<String , String> DistanceCalculationServiceMap = Map.of(
             DistanceCalculationType.HAVERSINE.name(),"couriertracking.service.HaversineDistanceStrategy",
-            DistanceCalculationType.EUCLIDEAN.name(),"couriertracking.service.HaversineDistanceStrategy");
+            DistanceCalculationType.EUCLIDEAN.name(),"couriertracking.service.EuclideanDistanceStrategy");
 
     public DistanceCalculationStrategy getDistanceCalculationStrategy() {
         String calculationServiceName = DistanceCalculationServiceMap.get(courierTrackingConfig.getDistanceCalculationType());
+        if(calculationServiceName == null) {
+            throw new IllegalStateException("CourierTracking service is not configured correctly");
+        }
         return applicationContext.getBean(calculationServiceName, DistanceCalculationStrategy.class);
     }
 
