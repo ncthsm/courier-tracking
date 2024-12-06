@@ -2,6 +2,7 @@ package com.migros.couriertracking.controller;
 
 import com.migros.couriertracking.config.CourierApiV1;
 import com.migros.couriertracking.model.dto.CourierDto;
+import com.migros.couriertracking.model.dto.CourierStoreVisitDto;
 import com.migros.couriertracking.model.request.CourierLocationRequest;
 import com.migros.couriertracking.model.request.CreateCourierRequest;
 import com.migros.couriertracking.model.response.CourierDistanceResponse;
@@ -71,6 +72,12 @@ public class CourierController {
             @Valid @RequestBody CourierLocationRequest request) {
         locationTrackingService.trackLocation(courierId,request);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{courierId}/history")
+    public ResponseEntity<Page<CourierStoreVisitDto>> getStoreVisit(@PathVariable(name = "courierId") Long courierId,
+                                                             @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+       return ResponseEntity.status(HttpStatus.OK).body(locationTrackingService.getStoreVisit(courierId,PageRequest.of(page, pageSize)));
     }
 
 }

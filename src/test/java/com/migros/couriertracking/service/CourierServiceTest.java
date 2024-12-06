@@ -136,7 +136,7 @@ class CourierServiceTest {
     void updateCourierName_WhenCourierExists_ShouldUpdateAndReturnDto() {
         Courier courier = getCourier();
         CourierDto courierDto = getCourierDto();
-        String newName = "Jane Doe";
+        String newName = "New Name";
 
         when(courierRepository.findById(anyLong())).thenReturn(Optional.of(courier));
         when(courierRepository.save(any(Courier.class))).thenReturn(courier);
@@ -244,7 +244,7 @@ class CourierServiceTest {
     private Courier getCourier() {
         Courier courier = new Courier();
         courier.setId(1L);
-        courier.setName("John Doe");
+        courier.setName("Necati Hasim");
         courier.setIdentityNumber("12345678901");
         courier.setTotalTravelDistance(0.0);
         return courier;
@@ -253,7 +253,7 @@ class CourierServiceTest {
     private CourierDto getCourierDto() {
         CourierDto courierDto = new CourierDto();
         courierDto.setId(1L);
-        courierDto.setName("John Doe");
+        courierDto.setName("Necati Hasim");
         courierDto.setIdentityNumber("12345678901");
         courierDto.setTotalTravelDistance(0.0);
         return courierDto;
@@ -261,7 +261,7 @@ class CourierServiceTest {
 
     private CreateCourierRequest getCourierRequest() {
         CreateCourierRequest request = new CreateCourierRequest();
-        request.setName("John Doe");
+        request.setName("Necati Hasim");
         request.setIdentityNumber("12345678901");
         return request;
     }

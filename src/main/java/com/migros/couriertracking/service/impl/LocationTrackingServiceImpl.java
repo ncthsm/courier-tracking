@@ -6,6 +6,8 @@ import com.migros.couriertracking.entity.CourierLocation;
 import com.migros.couriertracking.entity.CourierStoreVisit;
 import com.migros.couriertracking.entity.Store;
 import com.migros.couriertracking.event.LocationUpdateEvent;
+import com.migros.couriertracking.mapper.CourierStoreVisitMapper;
+import com.migros.couriertracking.model.dto.CourierStoreVisitDto;
 import com.migros.couriertracking.model.request.CourierLocationRequest;
 import com.migros.couriertracking.repository.CourierLocationRepository;
 import com.migros.couriertracking.repository.CourierStoreVisitRepository;
@@ -18,6 +20,8 @@ import com.migros.couriertracking.util.GeometryUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +38,7 @@ public class LocationTrackingServiceImpl implements LocationTrackingService {
     private final ApplicationEventPublisher eventPublisher;
     private final CourierTrackingConfig courierTrackingConfig;
     private final CourierService courierService;
+    private final CourierStoreVisitMapper courierStoreVisitMapper;
 
     @Override
     @Transactional
@@ -82,5 +87,9 @@ public class LocationTrackingServiceImpl implements LocationTrackingService {
         return location;
     }
 
+    public Page<CourierStoreVisitDto> getStoreVisit(Long courierId, PageRequest pageRequest) {
+        Page<CourierStoreVisit> courierStoreVisitPage =  visitRepository.findAllByCourierId(courierId,pageRequest);
+        return courierStoreVisitPage.map(courierStoreVisitMapper::to);
+    }
 
 }

@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/courier-db
     username: postgres
-    password: password
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -15,7 +15,7 @@ spring:
 tracking:
   entrance-radius-meters: 100
   reentryThresholdMinutes: 1
-  distanceCalculationType: # HAVERSINE or EUCLIDEAN
+  distanceCalculationType: HAVERSINE # HAVERSINE or EUCLIDEAN
 
 springdoc:
   api-docs:

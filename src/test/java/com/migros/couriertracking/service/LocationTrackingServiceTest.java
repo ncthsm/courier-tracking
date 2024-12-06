@@ -7,6 +7,7 @@ import com.migros.couriertracking.entity.CourierStoreVisit;
 import com.migros.couriertracking.entity.Store;
 import com.migros.couriertracking.event.LocationUpdateEvent;
 import com.migros.couriertracking.exception.DuplicateVisitException;
+import com.migros.couriertracking.mapper.CourierStoreVisitMapper;
 import com.migros.couriertracking.model.request.CourierLocationRequest;
 import com.migros.couriertracking.repository.CourierLocationRepository;
 import com.migros.couriertracking.repository.CourierStoreVisitRepository;
@@ -43,18 +44,23 @@ class LocationTrackingServiceTest {
     private ApplicationEventPublisher eventPublisher;
     @Mock
     private CourierTrackingConfig config;
+
+    @Mock
+    private CourierStoreVisitMapper visitMapper;
+
     private LocationTrackingService locationTrackingService;
 
     @BeforeEach
     void setUp() {
 
         locationTrackingService = new LocationTrackingServiceImpl(
-            locationRepository,
-            visitRepository,
-            storeService,
-            eventPublisher,
-            config,
-            courierService
+                locationRepository,
+                visitRepository,
+                storeService,
+                eventPublisher,
+                config,
+                courierService,
+                visitMapper
         );
     }
 
@@ -84,7 +90,7 @@ class LocationTrackingServiceTest {
         when(storeService.findStoresNearLocation(any(Point.class))).thenReturn(List.of(store));
         when(config.getReentryThresholdMinutes()).thenReturn(1);
         when(visitRepository.findLastVisit(anyLong(), anyLong(), any(LocalDateTime.class)))
-            .thenReturn(Optional.empty());
+                .thenReturn(Optional.empty());
 
         locationTrackingService.checkStoreEntries(event);
 
@@ -102,12 +108,12 @@ class LocationTrackingServiceTest {
         when(storeService.findStoresNearLocation(any(Point.class))).thenReturn(List.of(store));
         when(config.getReentryThresholdMinutes()).thenReturn(1);
         when(visitRepository.findLastVisit(anyLong(), anyLong(), any(LocalDateTime.class)))
-            .thenReturn(Optional.of(recentVisit));
+                .thenReturn(Optional.of(recentVisit));
 
         // when & then
         assertThatThrownBy(() -> locationTrackingService.checkStoreEntries(event))
-            .isInstanceOf(DuplicateVisitException.class)
-            .hasMessageContaining("has already visited store");
+                .isInstanceOf(DuplicateVisitException.class)
+                .hasMessageContaining("has already visited store");
     }
 
     private CourierLocationRequest createLocationRequest() {
